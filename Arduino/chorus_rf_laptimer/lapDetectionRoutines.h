@@ -99,7 +99,7 @@ bool checkIsLapDetected() {
     // --- the commented part in the condition below would make sure that the proximity is not tracked before threshold. is it needed?
     if (rssi > upperSecondLevelRssiThreshold - PROXIMITY_STEPS /*&& rssi > rssiThreshold*/) {
         isApproaching = true;
-        digitalHigh(ledPin); // debug only
+        //digitalHigh(ledPin); // debug only
 
         uint16_t diffWithThreshold = upperSecondLevelRssiThreshold - rssi;
         if (diffWithThreshold < currentProximityIndex) {
@@ -156,7 +156,7 @@ bool checkIsLapDetected() {
 }
 
 void resetFieldsAfterLapDetection() {
-    digitalLow(ledPin);
+    //digitalLow(ledPin);
     isApproaching = false;
     isLapDetectionTimeoutExpired = false;
     currentProximityIndex = 0xFF;

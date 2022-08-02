@@ -27,14 +27,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#define portOfPin(P)\
-  (((P)>=0&&(P)<8)?&PORTD:(((P)>7&&(P)<14)?&PORTB:&PORTC))
-#define ddrOfPin(P)\
-  (((P)>=0&&(P)<8)?&DDRD:(((P)>7&&(P)<14)?&DDRB:&DDRC))
-#define pinOfPin(P)\
-  (((P)>=0&&(P)<8)?&PIND:(((P)>7&&(P)<14)?&PINB:&PINC))
-#define pinIndex(P)((uint8_t)(P>13?P-14:P&7))
-#define pinMask(P)((uint8_t)(1<<pinIndex(P)))
+#define portOfPin(P) portOutputRegister(digitalPinToPort(P))
+#define ddrOfPin(P) portModeRegister(digitalPinToPort(P))
+#define pinOfPin(P) portInputRegister(digitalPinToPort(P))
+#define pinMask(P) digitalPinToBitMask(P)
 
 #define pinAsInput(P) *(ddrOfPin(P))&=~pinMask(P)
 #define pinAsInputPullUp(P) *(ddrOfPin(P))&=~pinMask(P);digitalHigh(P)

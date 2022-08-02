@@ -33,9 +33,26 @@ SOFTWARE.
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 
+// ADC frequency = CPU frequency / prescaler
+// S2 S1 S0 PRESCALER
+//  0  0  0        1
+//  0  0  1        2
+//  0  1  0        4
+//  0  1  1        8
+//  1  0  0       16
+//  1  0  1       32
+//  1  1  0       64
+//  1  1  1      128
+// By default the prescaler is set such that ADC frequency = 128 kHz
+
 void initFastADC() {
     // set ADC prescaler to 16 to speedup ADC readings
+    // 16 MHz / 16 = 1 MHz
     sbi(ADCSRA,ADPS2);
     cbi(ADCSRA,ADPS1);
     cbi(ADCSRA,ADPS0);
+    // 8 MHz / 8 = 1 MHz
+    //cbi(ADCSRA,ADPS2);
+    //sbi(ADCSRA,ADPS1);
+    //sbi(ADCSRA,ADPS0);
 }

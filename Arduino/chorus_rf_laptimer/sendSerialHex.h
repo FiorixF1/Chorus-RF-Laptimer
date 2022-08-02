@@ -72,72 +72,72 @@ void longToHex(uint8_t *buf, uint32_t val) {
 }
 
 void writeSendHeader() {
-    Serial.write("S");
-    Serial.write(MODULE_ID_HEX);
+    Serial1.write("S");
+    Serial1.write(MODULE_ID_HEX);
 }
 
 uint8_t send4BitsToSerial(uint8_t prefix, uint8_t byteValue) {
-    if (Serial.availableForWrite() >= 5) { // e.g. "S1R1\n"
+    if (Serial1.availableForWrite() >= 5) { // e.g. "S1R1\n"
         writeSendHeader();
-        Serial.write(prefix);
+        Serial1.write(prefix);
         uint8_t buf;
         halfByteToHex(&buf, byteValue);
-        Serial.write(buf);
-        Serial.write(SERIAL_DATA_DELIMITER);
+        Serial1.write(buf);
+        Serial1.write(SERIAL_DATA_DELIMITER);
         return(1);
     }
     return(0);
 }
 
 uint8_t sendByteToSerial(uint8_t prefix, uint8_t byteValue) {
-    if (Serial.availableForWrite() >= 6) {
+    if (Serial1.availableForWrite() >= 6) {
         writeSendHeader();
-        Serial.write(prefix);
+        Serial1.write(prefix);
         uint8_t buf[2];
         byteToHex(buf, byteValue);
-        Serial.write(buf, 2);
-        Serial.write(SERIAL_DATA_DELIMITER);
+        Serial1.write(buf, 2);
+        Serial1.write(SERIAL_DATA_DELIMITER);
         return(1);
     }
     return(0);
 }
 
 uint8_t sendIntToSerial(uint8_t prefix, uint16_t intValue) {
-    if (Serial.availableForWrite() >= 8) {
+    if (Serial1.availableForWrite() >= 8) {
         writeSendHeader();
-        Serial.write(prefix);
+        Serial1.write(prefix);
         uint8_t buf[4];
         intToHex(buf, intValue);
-        Serial.write(buf, 4);
-        Serial.write(SERIAL_DATA_DELIMITER);
+        Serial1.write(buf, 4);
+        Serial1.write(SERIAL_DATA_DELIMITER);
         return(1);
     }
     return(0);
 }
 
 uint8_t sendLongToSerial(uint8_t prefix, uint32_t longValue) {
-    if (Serial.availableForWrite() >= 12) {
+    if (Serial1.availableForWrite() >= 12) {
         writeSendHeader();
-        Serial.write(prefix);
+        Serial1.write(prefix);
         uint8_t buf[8];
         longToHex(buf, longValue);
-        Serial.write(buf, 8);
-        Serial.write(SERIAL_DATA_DELIMITER);
+        Serial1.write(buf, 8);
+        Serial1.write(SERIAL_DATA_DELIMITER);
         return(1);
     }
     return(0);
 }
 
 uint8_t sendLaptimeToSerial(uint8_t prefix, uint8_t counter, uint32_t longValue) {
-    if (Serial.availableForWrite() >= 14) {
+    if (Serial1.availableForWrite() >= 14) {
         writeSendHeader();
-        Serial.write(prefix);
+        Serial1.write(prefix);
         uint8_t buf[8];
         byteToHex(buf, counter);
-        Serial.write(buf, 2);
+        Serial1.write(buf, 2);
         longToHex(buf, longValue);
-        Serial.write(buf, 8);
-        Serial.write(SERIAL_DATA_DELIMITER);
+        Serial1.write(buf, 8);
+        Serial1.write(SERIAL_DATA_DELIMITER);
         return(1);
     }
     return(0);

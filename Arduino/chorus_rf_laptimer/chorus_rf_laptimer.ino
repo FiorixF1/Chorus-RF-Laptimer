@@ -306,8 +306,8 @@ uint8_t proxyBufDataSize = 0;
 // ----------------------------------------------------------------------------
 void setup() {
     // initialize led pin as output.
-    pinMode(ledPin, OUTPUT);
-    digitalHigh(ledPin);
+    //pinMode(ledPin, OUTPUT);
+    //digitalHigh(ledPin);
 
     // init buzzer pin
     pinMode(buzzerPin, OUTPUT);
@@ -324,11 +324,12 @@ void setup() {
     frequency = setModuleChannel(channelIndex, bandIndex);
 
     Serial.begin(BAUDRATE);
+    Serial1.begin(BAUDRATE);
 
     initFastADC();
 
     // Setup Done - Turn Status ledPin off.
-    digitalLow(ledPin);
+    //digitalLow(ledPin);
 
     DEBUG_CODE(
         pinMode(serialTimerPin, OUTPUT);
@@ -772,7 +773,7 @@ void readSerialDataChunk () {
     // don't read anything if we have something not sent in proxyBuf
     if (proxyBufDataSize != 0) return;
 
-    uint8_t availBytes = Serial.available();
+    uint8_t availBytes = Serial1.available();
     if (availBytes) {
         if (availBytes > READ_BUFFER_SIZE) {
             // digitalHigh(ledPin);
@@ -788,7 +789,7 @@ void readSerialDataChunk () {
 
         //read minimum of "available to read" and "free place in buffer"
         uint8_t canGetBytes = availBytes > freeBufBytes ? freeBufBytes : availBytes;
-        Serial.readBytes(&readBuf[readBufFilledBytes], canGetBytes);
+        Serial1.readBytes(&readBuf[readBufFilledBytes], canGetBytes);
         readBufFilledBytes += canGetBytes;
     }
 
@@ -836,9 +837,9 @@ void readSerialDataChunk () {
 }
 // ----------------------------------------------------------------------------
 void sendProxyDataChunk () {
-    if (proxyBufDataSize && Serial.availableForWrite() > proxyBufDataSize) {
-        Serial.write(proxyBuf, proxyBufDataSize);
-        Serial.write(SERIAL_DATA_DELIMITER);
+    if (proxyBufDataSize && Serial1.availableForWrite() > proxyBufDataSize) {
+        Serial1.write(proxyBuf, proxyBufDataSize);
+        Serial1.write(SERIAL_DATA_DELIMITER);
 
         proxyBufDataSize = 0;
     }
