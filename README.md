@@ -13,5 +13,10 @@ The patch consists of the following modifications:
     - RSSI on pin A3
     - Voltage monitor on pin A0
     - Buzzer on pin 9
+    This pin assignment makes the board compatible with the PCBs designed for Arduino Pro Mini.
 - The firmware still needs a 5 V board and a 16 MHz processor ;)
+
+<img src="docs/img/fiorix-single.png" align="left" alt="Fiorix single" width="200"/>
+<img src="docs/img/fiorix-double.png" align="center" alt="Fiorix double" width="200"/>
+<img src="docs/img/fiorix-double-powered.png" align="right" alt="Fiorix double powered" width="200"/>
 
